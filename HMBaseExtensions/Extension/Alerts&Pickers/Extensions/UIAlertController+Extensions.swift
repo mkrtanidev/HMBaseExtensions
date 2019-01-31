@@ -2,7 +2,7 @@ import UIKit
 import AudioToolbox
 
 // MARK: - Initializers
-extension UIAlertController {
+public extension UIAlertController {
 	
     /// Create new alert view controller.
     ///
@@ -40,7 +40,7 @@ extension UIAlertController {
 
 
 // MARK: - Methods
-extension UIAlertController {
+public extension UIAlertController {
     
     /// Present alert view controller in the current view controller.
     ///
@@ -165,7 +165,7 @@ extension UIAlertController {
     }
 }
 
-extension UIAlertController {
+public extension UIAlertController {
     static func showError(_ error: Error?) {
         let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
         alert.addAction(title: "Ok")
@@ -173,7 +173,7 @@ extension UIAlertController {
     }
 }
 
-extension UIAlertController {
+public extension UIAlertController {
     
     public enum ToastDuration: Double {
         case short = 0.7

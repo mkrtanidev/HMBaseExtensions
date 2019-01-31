@@ -1,6 +1,6 @@
 import UIKit
 
-extension String {
+public extension String {
     
     subscript (i: Int) -> Character {
         return self[index(startIndex, offsetBy: i)]

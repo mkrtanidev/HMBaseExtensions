@@ -1,6 +1,6 @@
 import UIKit
 
-extension UISearchBar {
+public extension UISearchBar {
     
     var textField: UITextField? {
         return value(forKey: "searchField") as? UITextField

@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIImage {
+public extension UIImage {
     
     /// Resizes an image to the specified size.
     ///

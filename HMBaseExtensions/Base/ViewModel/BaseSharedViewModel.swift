@@ -2,8 +2,8 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class BaseSharedViewModel<T>: PBaseSharedViewModel {
-    typealias SharedData = T
+public class BaseSharedViewModel<T>: PBaseSharedViewModel {
+    public typealias SharedData = T
     
     private var sharedDataSparseArray = [AnyHashable: BehaviorRelay<T?>]()
     private var bagOfSentSharedDataSparseArray = [AnyHashable: T?]()
@@ -30,12 +30,12 @@ class BaseSharedViewModel<T>: PBaseSharedViewModel {
     }
     
     
-    func sendSharedDataWith(sendCode: AnyHashable, data: T?) {
+    public func sendSharedDataWith(sendCode: AnyHashable, data: T?) {
         bagOfSentSharedDataSparseArray.removeValue(forKey: sendCode)
         sendBaseSharedDataFor(sendCode: sendCode, data: data);
     }
     
-    func getSharedDataFor(sendCode: AnyHashable, listener: SharedDataListener) -> Disposable {
+    public func getSharedDataFor(sendCode: AnyHashable, listener: SharedDataListener) -> Disposable {
         return getBaseSharedDataFor(sendCode: sendCode).bind {[weak self] data in
             guard let weakSelf = self else { return }
             
@@ -49,7 +49,7 @@ class BaseSharedViewModel<T>: PBaseSharedViewModel {
         }
     }
     
-    func getSharedDataAlwaysFor(sendCode: AnyHashable, listener: SharedDataListener) -> Disposable {
+    public func getSharedDataAlwaysFor(sendCode: AnyHashable, listener: SharedDataListener) -> Disposable {
         return getBaseSharedDataFor(sendCode: sendCode).bind {[weak self] data in
             guard let weakSelf = self else { return }
             weakSelf.bagOfSentSharedDataSparseArray[sendCode] = data

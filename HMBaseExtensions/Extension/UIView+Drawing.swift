@@ -1,7 +1,7 @@
 import UIKit
 
 @IBDesignable
-class GradientView: UIView {
+public class GradientView: UIView {
     @IBInspectable
     var startColor: UIColor = .white {
         didSet {
@@ -15,7 +15,7 @@ class GradientView: UIView {
         }
     }
     
-    override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else {
             return
         }

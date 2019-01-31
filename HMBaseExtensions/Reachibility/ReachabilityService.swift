@@ -8,7 +8,7 @@ public enum ReachabilityStatus {
     case unreachable
 }
 
-extension ReachabilityStatus {
+public extension ReachabilityStatus {
     var reachable: Bool {
         switch self {
         case .reachable:
@@ -19,7 +19,7 @@ extension ReachabilityStatus {
     }
 }
 
-protocol ReachabilityService {
+public protocol ReachabilityService {
     var reachability: Observable<ReachabilityStatus> { get }
 }
 
@@ -27,12 +27,12 @@ enum ReachabilityServiceError: Error {
     case failedToCreate
 }
 
-class DefaultReachabilityService
+public class DefaultReachabilityService
     : ReachabilityService {
 
     private let _reachabilitySubject: BehaviorSubject<ReachabilityStatus>
 
-    var reachability: Observable<ReachabilityStatus> {
+    public var reachability: Observable<ReachabilityStatus> {
         return _reachabilitySubject.asObservable()
     }
 

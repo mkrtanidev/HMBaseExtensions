@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 
-protocol PBaseSharedViewModel {
+public protocol PBaseSharedViewModel {
     associatedtype SharedData
     typealias SharedDataListener = Optional<((SharedData?) -> Void)>
     

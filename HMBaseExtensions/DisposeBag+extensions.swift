@@ -1,6 +1,6 @@
 import RxSwift
 
-extension DisposeBag {
+public extension DisposeBag {
     func disposeAll() {
         let mirror = Mirror(reflecting: self)
         for (_, value) in mirror.children {

@@ -1,8 +1,8 @@
 import UIKit
 
-class LocalizedLabel: UILabel {
+public class LocalizedLabel: UILabel {
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         if self.attributedText != nil {
             let attr = self.attributedText?.attributes(at: 0, effectiveRange: nil)
@@ -15,8 +15,8 @@ class LocalizedLabel: UILabel {
     
 }
 
-class LocalizedButton: UIButton {
-    override func awakeFromNib() {
+public class LocalizedButton: UIButton {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         //        let UIControlStates: [UIControlState] = [.normal, .highlighted, .disabled, .selected, .focused, .application, .reserved]
         //        for state in UIControlStates {
@@ -32,16 +32,16 @@ class LocalizedButton: UIButton {
     }
 }
 
-class LocalizedTextField: UITextField {
-    override func awakeFromNib() {
+public class LocalizedTextField: UITextField {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         self.placeholder = LanguageManager.localizedstring(self.placeholder.valueOr(""), comment: "")
         self.text = LanguageManager.localizedstring(self.text.valueOr(""), comment: "")
     }
 }
 
-class LocalizesBarButtonItem: UIBarButtonItem {
-    override func awakeFromNib() {
+public class LocalizesBarButtonItem: UIBarButtonItem {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         self.title = LanguageManager.localizedstring(self.title.valueOr(""), comment: "")
     }

@@ -9,7 +9,7 @@ private let swizzling: (UIViewController.Type, Selector, Selector) -> () = { vie
     method_exchangeImplementations(old, new)
 }
 
-extension UIViewController {
+public extension UIViewController {
     private struct AssociatedObjectKeys {
         static var viewModel = 0
         static var disposeBag = 1
@@ -58,7 +58,7 @@ extension UIViewController {
  swizzle viewDidLoad() method for make some required steps, automaticly call bindings and subscribe on notification
  - Note: call in appDelegate
  */
-    open class func initializeing() {
+    public class func initializeing() {
         // make sure this isn't a subclass
         guard self === UIViewController.self else { return }
         swizzling(self, #selector(self.viewDidLoad), #selector(self.proj_viewDidLoad))

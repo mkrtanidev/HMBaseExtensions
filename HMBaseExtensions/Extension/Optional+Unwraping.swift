@@ -1,6 +1,6 @@
 import Foundation
 
-extension Optional {
+public extension Optional {
     func isNil() -> Bool {
         return self == nil
     }
@@ -11,9 +11,5 @@ extension Optional {
     
     func valueOr(_ default: Wrapped) -> Wrapped {
         return self ?? `default`
-    }
-    
-    func wrapped() -> Wrapped {
-        return self!
     }
 }

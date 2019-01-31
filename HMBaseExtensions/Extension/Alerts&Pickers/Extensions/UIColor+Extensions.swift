@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     
     /// SwifterSwift: https://github.com/SwifterSwift/SwifterSwift
     /// Hexadecimal value string (read-only).

@@ -1,5 +1,5 @@
 import UIKit
 
-protocol BaseAppDelegate: UIApplicationDelegate {
+public protocol BaseAppDelegate: UIApplicationDelegate {
     var congifs: PBaseApplicationConfigs { get }
 }

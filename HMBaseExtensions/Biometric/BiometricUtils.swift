@@ -1,7 +1,7 @@
 import Foundation
 import LocalAuthentication
 
-struct BiometricUtils {
+public  struct BiometricUtils {
     public enum BiometrivType {
         case none, touchID, faceID
     }

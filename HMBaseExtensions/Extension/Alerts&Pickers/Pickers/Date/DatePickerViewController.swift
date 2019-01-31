@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIAlertController {
+public extension UIAlertController {
     
     /// Add a date picker
     ///
@@ -17,7 +17,7 @@ extension UIAlertController {
     }
 }
 
-final class DatePickerViewController: UIViewController {
+public final class DatePickerViewController: UIViewController {
     
     public typealias Action = (Date) -> Void
     
@@ -45,7 +45,7 @@ final class DatePickerViewController: UIViewController {
         Log("has deinitialized")
     }
     
-    override func loadView() {
+    override public func loadView() {
         view = datePicker
     }
     

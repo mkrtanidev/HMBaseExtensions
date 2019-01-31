@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIImageView {
+public extension UIImageView {
     
     /// Sets the image property of the view based on initial text, a specified background color, custom text attributes, and a circular clipping
     ///
@@ -89,7 +89,7 @@ typealias HSVOffset = (hue: CGFloat, saturation: CGFloat, brightness: CGFloat, a
 let kGradientTopOffset: HSVOffset = (hue: -0.025, saturation: 0.05, brightness: 0, alpha: 0)
 let kGradientBotomOffset: HSVOffset = (hue: 0.025, saturation: -0.05, brightness: 0, alpha: 0)
 
-extension UIImageView {
+public extension UIImageView {
     
     public func setImageForName(string: String, backgroundColor: UIColor? = nil, circular: Bool, textAttributes: [NSAttributedString.Key: AnyObject]?, gradient: Bool = false) {
         

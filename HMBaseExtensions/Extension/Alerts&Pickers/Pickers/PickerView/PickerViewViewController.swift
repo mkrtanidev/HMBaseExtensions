@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIAlertController {
+public extension UIAlertController {
     
     /// Add a picker view
     ///
@@ -14,7 +14,7 @@ extension UIAlertController {
     }
 }
 
-final class PickerViewViewController: UIViewController {
+public final class PickerViewViewController: UIViewController {
     
     public typealias Values = [[String]]
     public typealias Index = (column: Int, row: Int)
@@ -43,17 +43,17 @@ final class PickerViewViewController: UIViewController {
         Log("has deinitialized")
     }
     
-    override func loadView() {
+    override public func loadView() {
         view = pickerView
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         pickerView.dataSource = self
         pickerView.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         if let initialSelection = initialSelection, values.count > initialSelection.column, values[initialSelection.column].count > initialSelection.row {
             pickerView.selectRow(initialSelection.row, inComponent: initialSelection.column, animated: true)

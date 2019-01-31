@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class BaseViewModel {
+public class BaseViewModel {
     private var observablesDict = [AnyHashable: Any]()
     private var reachibility = Reachability()
     /// indicate that viewModel is loading data and need to show loading view

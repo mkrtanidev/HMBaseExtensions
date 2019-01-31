@@ -1,6 +1,6 @@
 import UIKit
 
-extension UICollectionViewCell {
+public extension UICollectionViewCell {
     static var reuseIdentifier: String {
         return NSStringFromClass(self)
     }

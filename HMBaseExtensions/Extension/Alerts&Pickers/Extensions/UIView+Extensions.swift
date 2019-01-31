@@ -4,7 +4,7 @@ import Foundation
 // MARK: - Designable Extension
 
 @IBDesignable
-extension UIView {
+public extension UIView {
     
     @IBInspectable
     /// Should the corner be as circle

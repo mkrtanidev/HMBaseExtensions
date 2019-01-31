@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
     static func instantiateViewControllerForStoryBoardId<T>(_ name: String) -> T {
         let type = T.self
         let className = String(describing: type)

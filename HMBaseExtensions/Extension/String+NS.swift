@@ -1,6 +1,6 @@
 import Foundation
 
-extension String {
+public extension String {
     var lastPathComponent: String {
         return (self as NSString).lastPathComponent
     }

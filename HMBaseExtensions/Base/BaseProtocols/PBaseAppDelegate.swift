@@ -1,5 +1,5 @@
 import UIKit
 
-protocol PBaseAppDelegate: UIApplicationDelegate {
+public protocol PBaseAppDelegate: UIApplicationDelegate {
     var configs: PBaseApplicationConfigs { get }
 }

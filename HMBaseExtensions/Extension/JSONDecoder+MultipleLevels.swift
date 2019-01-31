@@ -34,8 +34,8 @@ extension JSONDecodeError: LocalizedError {
     }
 }
 
-extension JSONDecoder {
-    open func decode<T>(_ type: T.Type, from data: Data, nestedKeys: String...) throws -> T where T : Decodable {
+public extension JSONDecoder {
+    public func decode<T>(_ type: T.Type, from data: Data, nestedKeys: String...) throws -> T where T : Decodable {
         let json = try JSONSerialization.jsonObject(with: data, options: [])
         guard var jsonDict = json as? [String: Any] else {
             return try decode(T.self, from: data)

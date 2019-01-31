@@ -1,6 +1,6 @@
 import Foundation
 
-extension Array {
+public extension Array {
     
     @discardableResult
     mutating func append(_ newArray: Array) -> CountableRange<Int> {
@@ -40,7 +40,7 @@ extension Array {
     }
 }
 
-extension Array where Element: Equatable {
+public extension Array where Element: Equatable {
     
     /// Remove Dublicates
     var unique: [Element] {

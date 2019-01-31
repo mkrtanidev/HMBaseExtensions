@@ -1,6 +1,6 @@
 import Foundation
 
-struct TestHelper {
+public struct TestHelper {
     private static var is_Testing = 2
     static func isTesting() -> Bool {
         if is_Testing == 1 {
