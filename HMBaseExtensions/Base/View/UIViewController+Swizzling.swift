@@ -95,10 +95,10 @@ public extension UIViewController {
     
     
     /// override to do view bindings
-    @objc func bindViews() { }
+    @objc open func bindViews() { }
     
     /// any additional steps after language change
-    @objc func onLanguageChange(_ note: Notification) {
+    @objc open func onLanguageChange(_ note: Notification) {
         // any additioal steps every time when language changes
         let moduleName = NSStringFromClass(self.classForCoder).split(separator: ".").first
         if updateViewOnLanguageChange && (moduleName?.contains("MVVM")).valueOr(false) {
@@ -143,7 +143,7 @@ public extension UIViewController {
      - Parameter error: error to be handled
      - Note: override in any viewController, to do error handling manualy, by default show dialog with error message
      */
-    func showError(_ error: Error) {
+    open func showError(_ error: Error) {
         UIAlertController.showError(error)
     }
     

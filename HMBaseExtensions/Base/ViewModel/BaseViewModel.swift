@@ -38,12 +38,12 @@ open class BaseViewModel {
     
     /// General error handling
     /// - Parameter error: error for handling
-    func handleError(_ error: Error) {
+    open func handleError(_ error: Error) {
         
     }
     
     /// override and write retry logic here
-    func retry() {
+    open func retry() {
         
     }
     
