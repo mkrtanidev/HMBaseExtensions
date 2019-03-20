@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-public class BaseSharedViewModel<T>: PBaseSharedViewModel {
+open class BaseSharedViewModel<T>: PBaseSharedViewModel {
     public typealias SharedData = T
     
     private var sharedDataSparseArray = [AnyHashable: BehaviorRelay<T?>]()

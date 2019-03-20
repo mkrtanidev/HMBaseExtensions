@@ -1,7 +1,7 @@
 import UIKit
 
 @IBDesignable
-public class GradientSlider: UIControl {
+open class GradientSlider: UIControl {
     
     static var defaultThickness:CGFloat = 2.0
     static var defaultThumbSize:CGFloat = 28.0
@@ -216,7 +216,7 @@ public class GradientSlider: UIControl {
         commonSetup()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         minColor = aDecoder.decodeObject(forKey: "minColor") as? UIColor ?? UIColor.lightGray
@@ -235,7 +235,7 @@ public class GradientSlider: UIControl {
         commonSetup()
     }
     
-    override public func encode(with aCoder: NSCoder) {
+    override open func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
         
         aCoder.encode(minColor, forKey: "minColor")
@@ -319,7 +319,7 @@ public class GradientSlider: UIControl {
     
     //MARK: - Touch Tracking
     
-    override public func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+    override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         let pt = touch.location(in: self)
         
         let center = _thumbLayer.position
@@ -332,7 +332,7 @@ public class GradientSlider: UIControl {
         return false
     }
     
-    override public func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+    override open func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         let pt = touch.location(in: self)
         let newValue = valueForLocation(point: pt)
         set(value: newValue, animated: false)
@@ -343,7 +343,7 @@ public class GradientSlider: UIControl {
         return true
     }
     
-    override public func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+    override open func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         if let pt = touch?.location(in: self){
             let newValue = valueForLocation(point: pt)
             set(value: newValue, animated: false)

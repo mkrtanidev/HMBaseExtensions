@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-public class BaseViewModel {
+open class BaseViewModel {
     private var observablesDict = [AnyHashable: Any]()
     private var reachibility = Reachability()
     /// indicate that viewModel is loading data and need to show loading view
@@ -47,7 +47,7 @@ public class BaseViewModel {
         
     }
     
-    required init() {
+    required public init() {
         reachibility?.whenUnreachable = {[weak self] _ in
             self?.doAction(BaseAction.showNoInternet, param: Optional<Void>(nilLiteral: ()))
         }

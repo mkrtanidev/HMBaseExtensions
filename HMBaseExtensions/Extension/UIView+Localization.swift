@@ -1,8 +1,8 @@
 import UIKit
 
-public class LocalizedLabel: UILabel {
+open class LocalizedLabel: UILabel {
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         if self.attributedText != nil {
             let attr = self.attributedText?.attributes(at: 0, effectiveRange: nil)
@@ -15,8 +15,8 @@ public class LocalizedLabel: UILabel {
     
 }
 
-public class LocalizedButton: UIButton {
-    override public func awakeFromNib() {
+open class LocalizedButton: UIButton {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         //        let UIControlStates: [UIControlState] = [.normal, .highlighted, .disabled, .selected, .focused, .application, .reserved]
         //        for state in UIControlStates {
@@ -32,27 +32,27 @@ public class LocalizedButton: UIButton {
     }
 }
 
-public class LocalizedTextField: UITextField {
-    override public func awakeFromNib() {
+open class LocalizedTextField: UITextField {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         self.placeholder = LanguageManager.localizedstring(self.placeholder.valueOr(""), comment: "")
         self.text = LanguageManager.localizedstring(self.text.valueOr(""), comment: "")
     }
 }
 
-public class LocalizesBarButtonItem: UIBarButtonItem {
-    override public func awakeFromNib() {
+open class LocalizesBarButtonItem: UIBarButtonItem {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         self.title = LanguageManager.localizedstring(self.title.valueOr(""), comment: "")
     }
 }
 
-public class LinkTextView: UITextView {
+open class LinkTextView: UITextView {
     //    public override var canBecomeFirstResponder: Bool {
     //        return false
     //    }
     
-    override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         
         guard let pos = closestPosition(to: point) else { return false }
         

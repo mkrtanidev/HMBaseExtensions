@@ -4,7 +4,7 @@ import RxCocoa
 
 let languageChangeNotification = Notification.Name("am.hovhannes.personal.language.manager.language.change")
 
-public class LanguageManager {
+open class LanguageManager {
     private enum Keys: String {
         case current
     }

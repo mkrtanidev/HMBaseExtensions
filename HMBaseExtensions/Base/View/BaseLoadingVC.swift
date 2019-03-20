@@ -15,13 +15,13 @@ extension UIActivityIndicatorView: LoadingView {
     }
 }
 
-public class BaseLoadingVC: UIViewController {
+open class BaseLoadingVC: UIViewController {
     override public var updateViewOnLanguageChange: Bool {
         return false
     }
     var loadingView: LoadingView!
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         self.view.alpha = 0.7
         if loadingView == nil {
@@ -45,12 +45,12 @@ public class BaseLoadingVC: UIViewController {
                                                         constant: 0.0)])
     }
     
-    override public func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadingView.startAnimate()
     }
     
-    override public func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         loadingView.endAnimate()
     }
