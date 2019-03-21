@@ -20,18 +20,18 @@ open class LanguageManager {
         }
     }
     
-    var languageChange: PublishRelay<String?> = PublishRelay()
-    var currentLocalized: String? {
+    public var languageChange: PublishRelay<String?> = PublishRelay()
+    public var currentLocalized: String? {
         let identifier = LanguageManager.current().valueOr("en")
         let locale = NSLocale(localeIdentifier: identifier)
         return locale.displayName(forKey: NSLocale.Key.identifier, value: identifier)
     }
     
-    static func current() -> String? {
+    public static func current() -> String? {
         return sInstance.userDefaults?.string(forKey: Keys.current.rawValue)
     }
     
-    static func setCurrent(_ value: String?) {
+    public static func setCurrent(_ value: String?) {
         if let lang = value {
             sInstance.userDefaults?.set(lang, forKey: Keys.current.rawValue)
             // important to post value after set in userDefaults
@@ -45,7 +45,7 @@ open class LanguageManager {
         NotificationCenter.default.post(name: languageChangeNotification, object: self)
     }
     
-    static func setCurrent(_ index: Int) {
+    public static func setCurrent(_ index: Int) {
         let lang = sInstance.supportedLanguages[index]
         sInstance.userDefaults?.set(lang, forKey: Keys.current.rawValue)
         // important to post value after set in userDefaults
@@ -53,7 +53,7 @@ open class LanguageManager {
         NotificationCenter.default.post(name: languageChangeNotification, object: self)
     }
     
-    static func localizedstring(_ key: String, comment: String = "") -> String {
+    public static func localizedstring(_ key: String, comment: String = "") -> String {
         let bundle = Bundle.main
         guard let countryCode = current(),
             let path = bundle.path(forResource: countryCode, ofType: "lproj"),
@@ -63,7 +63,7 @@ open class LanguageManager {
         return string
     }
     
-    static func localizedIdentifiers() -> [String] {
+    public static func localizedIdentifiers() -> [String] {
         var identifiers = [String]()
         guard let current = LanguageManager.current() else {
             return identifiers
@@ -80,7 +80,7 @@ open class LanguageManager {
 }
 
 extension String {
-    var localized: String {
+    public var localized: String {
         return LanguageManager.localizedstring(self)
     }
 }
