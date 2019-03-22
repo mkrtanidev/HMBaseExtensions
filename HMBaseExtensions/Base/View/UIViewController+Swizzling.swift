@@ -9,7 +9,23 @@ private let swizzling: (UIViewController.Type, Selector, Selector) -> () = { vie
     method_exchangeImplementations(old, new)
 }
 
-public extension UIViewController {
+public extension UIViewController import UIKit
+import RxSwift
+
+private let swizzling: (UIViewController.Type, Selector, Selector) -> () = { viewController, oldSelector, newSelector in
+    
+    guard let old = class_getInstanceMethod(viewController, oldSelector),
+        let new = class_getInstanceMethod(viewController, newSelector) else { return }
+    
+    let didAddMethod = class_addMethod(viewController, oldSelector, method_getImplementation(new), method_getTypeEncoding(new))
+    if didAddMethod {
+        class_replaceMethod(viewController, newSelector, method_getImplementation(old), method_getTypeEncoding(old))
+    } else {
+        method_exchangeImplementations(old, new)
+    }
+}
+
+extension UIViewController {
     private struct AssociatedObjectKeys {
         static var viewModel = 0
         static var disposeBag = 1
@@ -18,7 +34,7 @@ public extension UIViewController {
     }
     
     /// disposeBag for use in binding .dispose(by: disposeBag)
-    var disposeBag: DisposeBag {
+    public var disposeBag: DisposeBag {
         get {
             guard let disposeBag =  objc_getAssociatedObject(self, &AssociatedObjectKeys.disposeBag) as? DisposeBag else {
                 let db = DisposeBag()
@@ -29,7 +45,7 @@ public extension UIViewController {
         }
     }
     
-    var disposeBagForSharedData: DisposeBag {
+    private var disposeBagForSharedData: DisposeBag {
         get {
             guard let disposeBag =  objc_getAssociatedObject(self, &AssociatedObjectKeys.disposeBagForSharedData) as? DisposeBag else {
                 let db = DisposeBag()
@@ -43,21 +59,21 @@ public extension UIViewController {
         }
     }
     
-    static var sharedViewModel = BaseSharedViewModel<Any>()
+    public static var sharedViewModel = BaseSharedViewModel<Any>()
     
     /** override var and return false in all custom viewControllers which you want to not update view
-        after language chang
+     after language chang
      - Note: default value is true
      */
-    @objc var updateViewOnLanguageChange: Bool {
+    @objc open var updateViewOnLanguageChange: Bool {
         return true
     }
     
     
     /**
- swizzle viewDidLoad() method for make some required steps, automaticly call bindings and subscribe on notification
- - Note: call in appDelegate
- */
+     swizzle viewDidLoad() method for make some required steps, automaticly call bindings and subscribe on notification
+     - Note: call in appDelegate
+     */
     public class func initializeing() {
         // make sure this isn't a subclass
         guard self === UIViewController.self else { return }
@@ -77,9 +93,9 @@ public extension UIViewController {
         bindViews()
         baseBinding()
         NotificationCenter.default
-        .addObserver(self,
-                     selector: #selector(onLanguageChange(_:)),
-                     name: languageChangeNotification, object: nil)
+            .addObserver(self,
+                         selector: #selector(onLanguageChange(_:)),
+                         name: languageChangeNotification, object: nil)
     }
     
     @objc func proj_viewWillAppear(_ animated: Bool) {
@@ -136,7 +152,7 @@ public extension UIViewController {
                     }
                 }
             })
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
     
     /** error handling mehtod
@@ -152,12 +168,12 @@ public extension UIViewController {
      - Note:
      you must write an appropriate argument as the corresponding class
      as otherwise it will turn out class cast exception later
-    
+     
      - Parameter clazz: Class of ViewModel which you want to get
-    
+     
      - Returns: viewModel of your ViwController
-    */
-    func getViewModel<T: BaseViewModel>(as clazz: T.Type) -> T {
+     */
+    open func getViewModel<T: BaseViewModel>(as clazz: T.Type) -> T {
         guard let vm = objc_getAssociatedObject(self, &AssociatedObjectKeys.viewModel) as? T
             else {
                 let vm = T()
@@ -168,54 +184,54 @@ public extension UIViewController {
     }
     
     /**
-    for cases if we need to set viewModel out of our viewController
+     for cases if we need to set viewModel out of our viewController
      - Parameter vm: viewMOdel of viewController
- */
-    func setViewModel(_ vm: BaseViewModel) {
+     */
+    open func setViewModel(_ vm: BaseViewModel) {
         objc_setAssociatedObject(self, &AssociatedObjectKeys.viewModel, vm, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
     
     /// for easy set navigation title
     /// - Parameter title: the title of navigation item
-    func setNavigationTitle(_ navigationTitle: String?) {
+    open func setNavigationTitle(_ navigationTitle: String?) {
         navigationItem.title = navigationTitle
     }
     
     /// send data from viewController to another
     /// - Parameter sendCode: SendCode for identificate data
     /// - Parameter data: data that must be send
-    func sendSharedDataWith(sendCode: AnyHashable, data: Any?) {
+    open func sendSharedDataWith(sendCode: AnyHashable, data: Any?) {
         UIViewController.sharedViewModel.sendSharedDataWith(sendCode: sendCode, data: data)
     }
     
-/** get data for sendcode immidiatly after send (called sendSharedDataWith(sendcode:, data:) ) can call anywhere
- - Parameter sendCode: SendCode for identificate data
- - Parameter class: class for cast sended data
- - Parameter listener: optional block to handle data
- */
-    func getSharedDataImmidiatlyFor<T>(sendCode: AnyHashable, class: T.Type, listener: Optional<((T?) -> Void)>) {
+    /** get data for sendcode immidiatly after send (called sendSharedDataWith(sendcode:, data:) ) can call anywhere
+     - Parameter sendCode: SendCode for identificate data
+     - Parameter class: class for cast sended data
+     - Parameter listener: optional block to handle data
+     */
+    open func getSharedDataImmidiatlyFor<T>(sendCode: AnyHashable, class: T.Type, listener: Optional<((T?) -> Void)>) {
         UIViewController.sharedViewModel.getSharedDataFor(sendCode: sendCode) { data in
             listener?(data as? T)
-        }.disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
     }
     
-/** get data for sendcode immidiatly every time, after viewWillAppear, call in viewWillAppear
-- Parameter sendCode: SendCode for identificate data
-- Parameter class: class for cast sended data
-- Parameter listener: optional block to handle data
-*/
-    func getSharedDataAlwaysFor<T>(sendCode: AnyHashable, class: T.Type, listener: Optional<((T?) -> Void)>) {
+    /** get data for sendcode immidiatly every time, after viewWillAppear, call in viewWillAppear
+     - Parameter sendCode: SendCode for identificate data
+     - Parameter class: class for cast sended data
+     - Parameter listener: optional block to handle data
+     */
+    open func getSharedDataAlwaysFor<T>(sendCode: AnyHashable, class: T.Type, listener: Optional<((T?) -> Void)>) {
         UIViewController.sharedViewModel.getSharedDataAlwaysFor(sendCode: sendCode) { data in
             listener?(data as? T)
             }.disposed(by: disposeBagForSharedData)
     }
     
-/** get data for sendcode immidiatly after viewWillAppear, call in viewWillAppear
-- Parameter sendCode: SendCode for identificate data
-- Parameter class: class for cast sended data
-- Parameter listener: optional block to handle data
-*/
-    func getSharedDataOnActiveFor<T>(sendCode: AnyHashable, class: T.Type, listener: Optional<((T?) -> Void)>) {
+    /** get data for sendcode immidiatly after viewWillAppear, call in viewWillAppear
+     - Parameter sendCode: SendCode for identificate data
+     - Parameter class: class for cast sended data
+     - Parameter listener: optional block to handle data
+     */
+    open func getSharedDataOnActiveFor<T>(sendCode: AnyHashable, class: T.Type, listener: Optional<((T?) -> Void)>) {
         UIViewController.sharedViewModel.getSharedDataFor(sendCode: sendCode) { data in
             listener?(data as? T)
             }.disposed(by: disposeBagForSharedData)
