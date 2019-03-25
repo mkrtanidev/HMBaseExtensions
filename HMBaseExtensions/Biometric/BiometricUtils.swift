@@ -6,7 +6,7 @@ public  struct BiometricUtils {
         case none, touchID, faceID
     }
     
-    static func biometricType() -> BiometrivType {
+    public static func biometricType() -> BiometrivType {
         let authContext = LAContext()
         var error: NSError?
         let canEvaluate = authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
@@ -28,7 +28,7 @@ public  struct BiometricUtils {
         }
     }
     
-    static func authUser(localizedReason: String, reply: @escaping (Bool, Error?) -> Void) {
+    public static func authUser(localizedReason: String, reply: @escaping (Bool, Error?) -> Void) {
         let context = LAContext()
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
