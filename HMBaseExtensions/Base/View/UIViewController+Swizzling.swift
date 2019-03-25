@@ -6,17 +6,6 @@ private let swizzling: (UIViewController.Type, Selector, Selector) -> () = { vie
     guard let old = class_getInstanceMethod(viewController, oldSelector),
         let new = class_getInstanceMethod(viewController, newSelector) else { return }
     
-    method_exchangeImplementations(old, new)
-}
-
-public extension UIViewController import UIKit
-import RxSwift
-
-private let swizzling: (UIViewController.Type, Selector, Selector) -> () = { viewController, oldSelector, newSelector in
-    
-    guard let old = class_getInstanceMethod(viewController, oldSelector),
-        let new = class_getInstanceMethod(viewController, newSelector) else { return }
-    
     let didAddMethod = class_addMethod(viewController, oldSelector, method_getImplementation(new), method_getTypeEncoding(new))
     if didAddMethod {
         class_replaceMethod(viewController, newSelector, method_getImplementation(old), method_getTypeEncoding(old))

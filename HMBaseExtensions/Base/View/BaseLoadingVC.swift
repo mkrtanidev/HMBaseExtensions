@@ -16,7 +16,7 @@ extension UIActivityIndicatorView: LoadingView {
 }
 
 open class BaseLoadingVC: UIViewController {
-    override public var updateViewOnLanguageChange: Bool {
+    override open var updateViewOnLanguageChange: Bool {
         return false
     }
     var loadingView: LoadingView!

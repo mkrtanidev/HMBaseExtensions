@@ -1,6 +1,6 @@
 import Foundation
 
-open enum BaseAction: Hashable {
+public enum BaseAction: Hashable {
     case openErrorDialog
     case showNoInternet
 }
