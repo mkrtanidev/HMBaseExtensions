@@ -105,7 +105,7 @@ open class LinkTextView: UITextView {
     }
 }
 
-class LocalizedSegmentControl: UISegmentedControl, Localizable {
+open class LocalizedSegmentControl: UISegmentedControl, Localizable {
     func localize() {
         for i in 0..<numberOfSegments {
             if let key = titleForSegment(at: i) {
