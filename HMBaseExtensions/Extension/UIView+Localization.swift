@@ -105,6 +105,31 @@ open class LinkTextView: UITextView {
     }
 }
 
+class LocalizedSegmentControl: UISegmentedControl, Localizable {
+    func localize() {
+        for i in 0..<numberOfSegments {
+            if let key = titleForSegment(at: i) {
+                setTitle(LanguageManager.localizedstring(key), forSegmentAt: i)
+            }
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        localize()
+    }
+    
+    override init(items: [Any]?) {
+        super.init(items: items)
+        localize()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        localize()
+    }
+}
+
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUITextDirection(_ input: Int) -> UITextDirection {
     return UITextDirection(rawValue: input)
