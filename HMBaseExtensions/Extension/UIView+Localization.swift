@@ -114,17 +114,17 @@ open class LocalizedSegmentControl: UISegmentedControl, Localizable {
         }
     }
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         localize()
     }
     
-    override init(items: [Any]?) {
+    override public init(items: [Any]?) {
         super.init(items: items)
         localize()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         localize()
     }
