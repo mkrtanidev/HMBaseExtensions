@@ -105,11 +105,11 @@ extension UIViewController {
     /// any additional steps after language change
     @objc open func onLanguageChange(_ note: Notification) {
         // any additioal steps every time when language changes
-        let moduleName = NSStringFromClass(self.classForCoder).split(separator: ".").first
-        if updateViewOnLanguageChange && (moduleName?.contains("MVVM")).valueOr(false) {
-            self.view = nil
-            let _ = self.view
-            self.viewWillAppear(true)
+        let moduleName = NSStringFromClass(self.classForCoder)
+        if updateViewOnLanguageChange,
+            let bundleName = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String,
+            moduleName.contains(bundleName) {
+            self.loadView()
         }
     }
     
