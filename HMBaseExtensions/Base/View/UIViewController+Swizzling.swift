@@ -110,6 +110,9 @@ extension UIViewController {
             let bundleName = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String,
             moduleName.contains(bundleName) {
             self.loadView()
+            disposeBag.disposeAll()
+            disposeBagForSharedData.disposeAll()
+            baseBinding()
         }
     }
     
@@ -118,6 +121,8 @@ extension UIViewController {
             .subscribe(onNext: { [weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.showError($0)
+                }, onCompleted: {
+                    print("OnCOmplete")
             })
             .disposed(by: disposeBag)
         (getViewModel(as: BaseViewModel.self).getAction(BaseAction.showNoInternet) as Observable<String>)
@@ -149,6 +154,7 @@ extension UIViewController {
      - Note: override in any viewController, to do error handling manualy, by default show dialog with error message
      */
     open func showError(_ error: Error) {
+        print(#file, #line)
         UIAlertController.showError(error)
     }
     
