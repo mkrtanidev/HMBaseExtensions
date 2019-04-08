@@ -167,8 +167,27 @@ public extension UIAlertController {
 
 public extension UIAlertController {
     static func showError(_ error: Error?) {
-        let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
-        alert.addAction(title: "Ok")
+        var title: String?
+        var errorMessage = error?.localizedDescription
+        var okTitle = "Ok"
+        print(#file, #line)
+        if UIApplication.shared.delegate?.conforms(to: PBaseAppDelegate.self) == true {
+            let configs = (UIApplication.shared.delegate as? PBaseAppDelegate)?.configs
+            title = configs?.errorTitle
+            if errorMessage?.isEmpty == true {
+                errorMessage = configs?.errorMessage
+            }
+            if configs?.okTitle.isEmpty == false {
+                okTitle = (configs?.okTitle)!
+            }
+        } else {
+            title = "Error"
+            okTitle = "Ok"
+        }
+        print(#file, #line)
+        let alert = UIAlertController(title: title, message: errorMessage, preferredStyle: .alert)
+        alert.addAction(title: okTitle)
+        print(#file, #line)
         alert.show()
     }
 }
