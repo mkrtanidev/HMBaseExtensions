@@ -1,17 +1,17 @@
 import UIKit
 import NVActivityIndicatorView
 
-protocol LoadingView {
+public protocol LoadingView {
     func startAnimate()
     func endAnimate()
 }
 
 extension UIActivityIndicatorView: LoadingView {
-    func startAnimate() {
+    public func startAnimate() {
         self.startAnimating()
     }
     
-    func endAnimate() {
+    public func endAnimate() {
         self.stopAnimating()
     }
 }
@@ -59,11 +59,11 @@ open class BaseLoadingVC: UIViewController {
 }
 
 extension NVActivityIndicatorView: LoadingView {
-    func startAnimate() {
+    public func startAnimate() {
         self.startAnimating()
     }
     
-    func endAnimate() {
+    public func endAnimate() {
         self.stopAnimating()
     }
 }
