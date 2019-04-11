@@ -1,4 +1,5 @@
 import UIKit
+import NVActivityIndicatorView
 
 protocol LoadingView {
     func startAnimate()
@@ -55,4 +56,14 @@ open class BaseLoadingVC: UIViewController {
         loadingView.endAnimate()
     }
 
+}
+
+extension NVActivityIndicatorView: LoadingView {
+    func startAnimate() {
+        self.startAnimating()
+    }
+    
+    func endAnimate() {
+        self.stopAnimating()
+    }
 }

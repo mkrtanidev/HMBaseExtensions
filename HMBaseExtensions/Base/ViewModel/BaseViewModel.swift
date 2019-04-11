@@ -10,7 +10,7 @@ open class BaseViewModel {
     
     /// Get action and subscribe in viewController
     /// - Parameter action: action to get observable
-    public func getAction<T>(_ action: AnyHashable) -> Observable<T> {
+    public func getAction<T>(_ action: AnyHashable, argumentClass: T.Type) -> Observable<T> {
         guard let data = observablesDict[action] else {
             let observable = PublishRelay<T>()
             observablesDict[action] = observable

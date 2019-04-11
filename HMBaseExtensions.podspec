@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
   s.framework  = "UIKit"
   s.dependency "RxSwift", "~> 4.0"
   s.dependency "RxCocoa", "~> 4.0"
+  s.dependency "NVActivityIndicatorView"
   s.source_files  = "HMBaseExtensions/**/*.{swift}"
   s.swift_version = "4.2"
 end
