@@ -20,7 +20,7 @@ open class BaseLoadingVC: UIViewController {
     override open var updateViewOnLanguageChange: Bool {
         return false
     }
-    var loadingView: LoadingView!
+    public var loadingView: LoadingView!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
