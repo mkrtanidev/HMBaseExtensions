@@ -6,7 +6,7 @@ open class BaseViewModel {
     private var observablesDict = [AnyHashable: Any]()
     private var reachibility = Reachability()
     /// indicate that viewModel is loading data and need to show loading view
-    var showLoading: BehaviorRelay = BehaviorRelay(value: false)
+    public var showLoading: BehaviorRelay = BehaviorRelay(value: false)
     
     /// Get action and subscribe in viewController
     /// - Parameter action: action to get observable
