@@ -6,11 +6,11 @@ open class BaseViewModel {
     private var observablesDict = [AnyHashable: Any]()
     private var reachibility = Reachability()
     /// indicate that viewModel is loading data and need to show loading view
-    var showLoading: BehaviorRelay = BehaviorRelay(value: false)
+    public var showLoading: BehaviorRelay = BehaviorRelay(value: false)
     
     /// Get action and subscribe in viewController
     /// - Parameter action: action to get observable
-    public func getAction<T>(_ action: AnyHashable) -> Observable<T> {
+    public func getAction<T>(_ action: AnyHashable, argumentClass: T.Type) -> Observable<T> {
         guard let data = observablesDict[action] else {
             let observable = PublishRelay<T>()
             observablesDict[action] = observable

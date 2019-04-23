@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import NVActivityIndicatorView
 
 private let swizzling: (UIViewController.Type, Selector, Selector) -> () = { viewController, oldSelector, newSelector in
     
@@ -58,6 +59,16 @@ extension UIViewController {
         return true
     }
     
+    /** set loadingView to make individual loader for view controllers */
+    public static var loadingVC: BaseLoadingVC = {
+        let loadingVC = BaseLoadingVC()
+        loadingVC.loadingView = NVActivityIndicatorView(
+            frame: CGRect(x: 0.0, y: 0.0, width: 44.0, height: 44.0),
+            type: NVActivityIndicatorType.lineScale,
+            color: UIColor.blue,
+            padding: 0.0)
+        return loadingVC
+    }()
     
     /**
      swizzle viewDidLoad() method for make some required steps, automaticly call bindings and subscribe on notification
@@ -102,6 +113,10 @@ extension UIViewController {
     /// override to do view bindings
     @objc open func bindViews() { }
     
+    public func setNavigationPopGestureDelegateToNil() {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+    }
+    
     /// any additional steps after language change
     @objc open func onLanguageChange(_ note: Notification) {
         // any additioal steps every time when language changes
@@ -117,15 +132,13 @@ extension UIViewController {
     }
     
     private func baseBinding() {
-        (getViewModel(as: BaseViewModel.self).getAction(BaseAction.openErrorDialog) as Observable<Error>)
+        getViewModel(as: BaseViewModel.self).getAction(BaseAction.openErrorDialog, argumentClass: Error.self)
             .subscribe(onNext: { [weak self] in
                 guard let weakSelf = self else { return }
                 weakSelf.showError($0)
-                }, onCompleted: {
-                    print("OnCOmplete")
             })
             .disposed(by: disposeBag)
-        (getViewModel(as: BaseViewModel.self).getAction(BaseAction.showNoInternet) as Observable<String>)
+        getViewModel(as: BaseViewModel.self).getAction(BaseAction.showNoInternet, argumentClass: String.self)
             .subscribe(onNext: {
                 UIAlertController.showWith(message: $0)
             })
@@ -134,8 +147,7 @@ extension UIViewController {
             .subscribe(onNext: {[weak self] in
                 guard let `self` = self else { return }
                 if $0 {
-                    let loadingVC = BaseLoadingVC()
-                    self.addChildViewController(loadingVC, to: self.view)
+                    self.addChildViewController(UIViewController.loadingVC, to: self.view)
                 } else {
                     for child in self.children {
                         if child is BaseLoadingVC {
