@@ -165,7 +165,7 @@ extension UIViewController {
     /** handle No Internet case
     - Parameter: error Message
     */
-    open func handleNoInternet(_ message: String) {
+    @objc open func handleNoInternet(_ message: String) {
         UIAlertController.showWith(message: message)
     }
     
