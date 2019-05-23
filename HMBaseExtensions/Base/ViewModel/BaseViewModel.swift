@@ -54,6 +54,11 @@ open class BaseViewModel {
         reachibility?.whenReachable = {[weak self] _ in
             self?.retry()
         }
+        do {
+           try reachibility?.startNotifier()
+        } catch {
+            print(error)
+        }
     }
     
     private func isOptional<T>(_ type: T) -> Bool {
