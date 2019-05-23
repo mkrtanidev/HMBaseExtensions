@@ -139,8 +139,9 @@ extension UIViewController {
             })
             .disposed(by: disposeBag)
         getViewModel(as: BaseViewModel.self).getAction(BaseAction.showNoInternet, argumentClass: String.self)
-            .subscribe(onNext: {
-                UIAlertController.showWith(message: $0)
+            .subscribe(onNext: { [weak self] message in
+                guard let weakSelf = self else { return }
+                weakSelf.handleNoInternet(message)
             })
             .disposed(by: disposeBag)
         getViewModel(as: BaseViewModel.self).showLoading
@@ -159,6 +160,13 @@ extension UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    /** handle No Internet case
+    - Parameter: error Message
+    */
+    open func handleNoInternet(_ message: String) {
+        UIAlertController.showWith(message: message)
     }
     
     /** error handling mehtod
