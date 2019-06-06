@@ -173,7 +173,7 @@ extension UIViewController {
      - Parameter error: error to be handled
      - Note: override in any viewController, to do error handling manualy, by default show dialog with error message
      */
-    open func showError(_ error: Error) {
+    @objc open func showError(_ error: Error) {
         print(#file, #line)
         UIAlertController.showError(error)
     }
