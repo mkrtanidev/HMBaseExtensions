@@ -56,4 +56,8 @@ public final class DatePickerViewController: UIViewController {
     public func setDate(_ date: Date) {
         datePicker.setDate(date, animated: true)
     }
+    
+    public func getSelectedDate() -> Date {
+        return datePicker.date
+    }
 }
