@@ -12,8 +12,10 @@ open class BaseViewModel {
     /// - Parameter action: action to get observable
     public func getAction<T>(_ action: AnyHashable, argumentClass: T.Type) -> Observable<T> {
         guard let data = observablesDict[action] else {
+            objc_sync_enter(self)
             let observable = PublishRelay<T>()
             observablesDict[action] = observable
+            objc_sync_exit(self)
             return observable.asObservable()
         }
         return (data as! PublishRelay<T>).asObservable()
@@ -24,9 +26,11 @@ open class BaseViewModel {
     /// - Parameter param: param which passed to observable
     public func doAction<T>(_ action: AnyHashable, param: T?) {
         guard let data =  observablesDict[action] else {
+            objc_sync_enter(self)
             let observable = PublishRelay<T?>()
             observablesDict[action] = observable
             observable.accept(param)
+            objc_sync_exit(self)
             return
         }
         if let param = param {
@@ -48,9 +52,9 @@ open class BaseViewModel {
     }
     
     required public init() {
-        reachibility?.whenUnreachable = {[weak self] _ in
+        /*reachibility?.whenUnreachable = {[weak self] _ in
             self?.doAction(BaseAction.showNoInternet, param: Optional<Void>(nilLiteral: ()))
-        }
+        }*/
         reachibility?.whenReachable = {[weak self] _ in
             self?.retry()
         }

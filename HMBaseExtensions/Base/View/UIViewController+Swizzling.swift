@@ -138,13 +138,13 @@ extension UIViewController {
                 weakSelf.showError($0)
             })
             .disposed(by: disposeBag)
-        getViewModel(as: BaseViewModel.self).getAction(BaseAction.showNoInternet, argumentClass: Void?.self)
+        /*getViewModel(as: BaseViewModel.self).getAction(BaseAction.showNoInternet, argumentClass: Void?.self)
             .subscribe(onNext: { [weak self] _ in
                 guard let weakSelf = self,
                     let message = (UIApplication.shared.delegate as! PBaseAppDelegate).configs.noInternetMessage else { return }
                 weakSelf.handleNoInternet(message)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag)*/
         getViewModel(as: BaseViewModel.self).showLoading
             .subscribe(onNext: {[weak self] in
                 guard let `self` = self else { return }
