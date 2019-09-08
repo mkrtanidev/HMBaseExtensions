@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.name         = "HMBaseExtensions"
   s.summary      = "HMBaseExtensions is collection of extensions and classes for use in MVVM."
   s.requires_arc = true
-  s.version      = "0.1"
+  s.version      = "0.3"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       = { "Hovhannes Stepanyan" => "https://github.com/Hovo-Infinity" }
   s.homepage     = "https://github.com/pmbfish40/HMBaseExtensions"
