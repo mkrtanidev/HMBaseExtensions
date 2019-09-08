@@ -3,41 +3,45 @@ import RxSwift
 import RxCocoa
 
 open class BaseViewModel {
-    private var observablesDict = [AnyHashable: Any]()
+    private var observablesDict = [AnyHashable: ControlProperty<Any>]()
     private var reachibility = Reachability()
     /// indicate that viewModel is loading data and need to show loading view
     public var showLoading: BehaviorRelay = BehaviorRelay(value: false)
     
     /// Get action and subscribe in viewController
     /// - Parameter action: action to get observable
-    public func getAction<T>(_ action: AnyHashable, argumentClass: T.Type) -> Observable<T> {
+    public func getAction<T>(_ action: AnyHashable, argumentClass: T.Type) -> Observable<T?> {
         guard let data = observablesDict[action] else {
             objc_sync_enter(self)
-            let observable = PublishRelay<T>()
-            observablesDict[action] = observable
+            let empty = emptyControlProperty()
+            observablesDict[action] = empty
             objc_sync_exit(self)
-            return observable.asObservable()
+            return empty.map({ $0 as? T })
         }
-        return (data as! PublishRelay<T>).asObservable()
+        return data.map { $0 as? T }
+    }
+    
+    private func emptyControlProperty() -> ControlProperty<Any> {
+        let observable = PublishRelay<Any>()
+        let observer = Binder<Any>(self) { _, value in
+            observable.accept(value)
+        }
+        return ControlProperty(values: observable, valueSink: observer)
     }
     
     /// say viewController to do some action
     /// - Parameter action: action whish must emited
     /// - Parameter param: param which passed to observable
-    public func doAction<T>(_ action: AnyHashable, param: T?) {
+    public func doAction(_ action: AnyHashable, param: Any) {
         guard let data =  observablesDict[action] else {
             objc_sync_enter(self)
-            let observable = PublishRelay<T?>()
-            observablesDict[action] = observable
-            observable.accept(param)
+            let empty = emptyControlProperty()
+            observablesDict[action] = empty
+            empty.onNext(param)
             objc_sync_exit(self)
             return
         }
-        if let param = param {
-            (data as! PublishRelay<T>).accept(param)
-        } else {
-            (data as! PublishRelay<T?>).accept(param)
-        }
+        data.onNext(param)
     }
     
     /// General error handling
@@ -52,9 +56,9 @@ open class BaseViewModel {
     }
     
     required public init() {
-        /*reachibility?.whenUnreachable = {[weak self] _ in
-            self?.doAction(BaseAction.showNoInternet, param: Optional<Void>(nilLiteral: ()))
-        }*/
+//        reachibility?.whenUnreachable = {[weak self] _ in
+//            self?.doAction(BaseAction.showNoInternet, param: Optional<Void>(nilLiteral: ()))
+//        }
         reachibility?.whenReachable = {[weak self] _ in
             self?.retry()
         }

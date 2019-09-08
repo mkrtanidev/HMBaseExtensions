@@ -174,7 +174,7 @@ extension UIViewController {
      - Parameter error: error to be handled
      - Note: override in any viewController, to do error handling manualy, by default show dialog with error message
      */
-    @objc open func showError(_ error: Error) {
+    @objc open func showError(_ error: Error?) {
         print(#file, #line)
         UIAlertController.showError(error)
     }
@@ -251,6 +251,10 @@ extension UIViewController {
         UIViewController.sharedViewModel.getSharedDataFor(sendCode: sendCode) { data in
             listener?(data as? T)
             }.disposed(by: disposeBagForSharedData)
+    }
+    
+    public func setNavigationPopGestureDelegateToNil() {
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     
