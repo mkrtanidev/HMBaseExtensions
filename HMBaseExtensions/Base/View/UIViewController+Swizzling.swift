@@ -113,10 +113,6 @@ extension UIViewController {
     /// override to do view bindings
     @objc open func bindViews() { }
     
-    public func setNavigationPopGestureDelegateToNil() {
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-    }
-    
     /// any additional steps after language change
     @objc open func onLanguageChange(_ note: Notification) {
         // any additioal steps every time when language changes
