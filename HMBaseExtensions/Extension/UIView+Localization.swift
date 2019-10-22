@@ -93,6 +93,13 @@ open class LinkTextView: UITextView {
     //        return false
     //    }
     
+    override public var selectedTextRange: UITextRange? {
+        get {
+            return nil
+        }
+        set { }
+    }
+    
     override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         
         guard let pos = closestPosition(to: point) else { return false }
