@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-let languageChangeNotification = Notification.Name("am.hovhannes.personal.language.manager.language.change")
+public let languageChangeNotification = Notification.Name("am.hovhannes.personal.language.manager.language.change")
 
 open class LanguageManager {
     private enum Keys: String {
