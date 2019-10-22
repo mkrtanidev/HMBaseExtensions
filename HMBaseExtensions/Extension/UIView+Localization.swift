@@ -100,6 +100,14 @@ open class LinkTextView: UITextView {
         set { }
     }
     
+    override open func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+        
+        if gestureRecognizer.isKind(of: UILongPressGestureRecognizer.self) {
+            gestureRecognizer.isEnabled = false
+        }
+        return super.addGestureRecognizer(gestureRecognizer)
+    }
+    
     override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         
         guard let pos = closestPosition(to: point) else { return false }
