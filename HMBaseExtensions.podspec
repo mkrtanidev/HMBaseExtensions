@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/pmbfish40/HMBaseExtensions"
   s.source       = { :git => "https://github.com/pmbfish40/HMBaseExtensions.git", :tag => "#{s.version}" }
   s.framework  = "UIKit"
-  s.dependency "RxSwift", "~> 4.0"
-  s.dependency "RxCocoa", "~> 4.0"
+  s.dependency "RxSwift", "~> 5.0"
+  s.dependency "RxCocoa", "~> 5.0"
   s.dependency "NVActivityIndicatorView"
   s.source_files  = "HMBaseExtensions/**/*.{swift}"
   s.swift_version = "4.2"
