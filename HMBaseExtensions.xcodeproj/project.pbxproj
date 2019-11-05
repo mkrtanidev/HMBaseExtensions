@@ -403,6 +403,7 @@
 				TargetAttributes = {
 					A42AB4E62203261A00EE1224 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
@@ -658,7 +659,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hovhannesstepanyan.HMBaseExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -685,7 +686,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hovhannesstepanyan.HMBaseExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

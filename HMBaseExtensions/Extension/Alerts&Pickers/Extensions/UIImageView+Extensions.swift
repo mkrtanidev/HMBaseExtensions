@@ -91,17 +91,17 @@ let kGradientBotomOffset: HSVOffset = (hue: 0.025, saturation: -0.05, brightness
 
 public extension UIImageView {
     
-    public func setImageForName(string: String, backgroundColor: UIColor? = nil, circular: Bool, textAttributes: [NSAttributedString.Key: AnyObject]?, gradient: Bool = false) {
+    func setImageForName(string: String, backgroundColor: UIColor? = nil, circular: Bool, textAttributes: [NSAttributedString.Key: AnyObject]?, gradient: Bool = false) {
         
         setImageForName(string: string, backgroundColor: backgroundColor, circular: circular, textAttributes: textAttributes, gradient: gradient, gradientColors: nil)
     }
     
-    public func setImageForName(string: String, gradientColors: GradientColors? = nil, circular: Bool = true, textAttributes: [NSAttributedString.Key: AnyObject]? = nil) {
+    func setImageForName(string: String, gradientColors: GradientColors? = nil, circular: Bool = true, textAttributes: [NSAttributedString.Key: AnyObject]? = nil) {
         
         setImageForName(string: string, backgroundColor: nil, circular: circular, textAttributes: textAttributes, gradient: true, gradientColors: gradientColors)
     }
     
-    public func setImageForName(string: String, backgroundColor: UIColor? = nil, circular: Bool, textAttributes: [NSAttributedString.Key: AnyObject]? = nil, gradient: Bool = false, gradientColors: GradientColors? = nil) {
+    func setImageForName(string: String, backgroundColor: UIColor? = nil, circular: Bool, textAttributes: [NSAttributedString.Key: AnyObject]? = nil, gradient: Bool = false, gradientColors: GradientColors? = nil) {
         
         let initials: String = initialsFromString(string: string)
         let color: UIColor = (backgroundColor != nil) ? backgroundColor! : randomColor(for: string)
