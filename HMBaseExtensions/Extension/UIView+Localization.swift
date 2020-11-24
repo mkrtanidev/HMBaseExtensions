@@ -11,7 +11,13 @@ open class LocalizedLabel: UILabel, Localizable {
             let attrString = NSAttributedString.init(string: LanguageManager.localizedstring(self.attributedText!.string), attributes: attr)
             self.attributedText = attrString
         } else {
-            self.text = LanguageManager.localizedstring(self.text.valueOr(""), comment: "")
+            let localizedText = LanguageManager.localizedstring(self.text.valueOr(""), comment: "")
+            if localizedText.contains("<b>") {
+                let str = htmlToAttributedString(string: localizedText, font: font, color: textColor, alignment: textAlignment)
+                self.attributedText = str
+            } else {
+                self.text = localizedText
+            }
         }
     }
     
@@ -148,4 +154,32 @@ open class LocalizedSegmentControl: UISegmentedControl, Localizable {
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUITextDirection(_ input: Int) -> UITextDirection {
     return UITextDirection(rawValue: input)
+}
+
+fileprivate func htmlToAttributedString(string : String, font: UIFont, color: UIColor, alignment: NSTextAlignment) -> NSAttributedString{
+    var attribStr = NSMutableAttributedString()
+    var csstextalign = "left"
+    switch alignment {
+    case .center:
+        csstextalign = "center"
+    case .right:
+        csstextalign = "right"
+    case .justified:
+        csstextalign = "justify"
+    default: break
+    }
+
+    do {//, allowLossyConversion: true
+        let modifiedString = "<style>body{font-family: '\(font.fontName)'; font-size:\(font.pointSize)px; text-align: \(csstextalign);}</style>\(string)";
+        attribStr = try NSMutableAttributedString(data: modifiedString.data(using: .utf8)!,
+                                                  options:  [.documentType: NSAttributedString.DocumentType.html,
+                                                             .characterEncoding: String.Encoding.utf8.rawValue],
+                                                  documentAttributes: nil)
+        let textRangeForFont : NSRange = NSMakeRange(0, attribStr.length)
+        attribStr.addAttributes([.foregroundColor : color], range: textRangeForFont)
+    } catch {
+        print(error)
+    }
+
+    return attribStr
 }
