@@ -1,23 +1,31 @@
 import UIKit
 
+#if canImport(RxCocoa)
+import RxCocoa
+import RxSwift
+
+extension Reactive where Base: LocalizedLabel {
+    /// Bindable sink for `text` property.
+    public var localizedText: UIBindingObserver<Base, String?> {
+        return UIBindingObserver(UIElement: self.base) { label, localizedText in
+            label.localizedText = localizedText
+        }
+    }
+}
+#endif
+
 @objc protocol Localizable {
     func localize()
 }
 
 open class LocalizedLabel: UILabel, Localizable {
-    func localize() {
+    public func localize() {
         if self.attributedText != nil {
             let attr = self.attributedText?.attributes(at: 0, effectiveRange: nil)
             let attrString = NSAttributedString.init(string: LanguageManager.localizedstring(self.attributedText!.string), attributes: attr)
             self.attributedText = attrString
         } else {
-            let localizedText = LanguageManager.localizedstring(self.text.valueOr(""), comment: "")
-            if localizedText.contains("<b>") {
-                let str = htmlToAttributedString(string: localizedText, font: font, color: textColor, alignment: textAlignment)
-                self.attributedText = str
-            } else {
-                self.text = localizedText
-            }
+            self.localizedText = LanguageManager.localizedstring(self.text.valueOr(""), comment: "")
         }
     }
     
@@ -31,6 +39,20 @@ open class LocalizedLabel: UILabel, Localizable {
         localize()
     }
     
+    public var localizedText: String? {
+        didSet {
+            guard let localizedText = localizedText else {
+                text = nil
+                return
+            }
+            if localizedText.contains("<b>") {
+                let str = htmlToAttributedString(string: localizedText, font: font, color: textColor, alignment: textAlignment)
+                self.attributedText = str
+            } else {
+                self.text = localizedText
+            }
+        }
+    }
 }
 
 open class LocalizedButton: UIButton, Localizable {
